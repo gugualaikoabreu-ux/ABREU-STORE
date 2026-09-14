@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABREU STORE | Sua Loja Oficial</title>
+    <style>
+        /* Estilos Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #ffffff;
+            color: #000;
+            text-align: center;
+            padding: 8px 10px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #000000;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #222;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        /* Container de Pesquisa */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #222;
+            border-radius: 4px;
+            padding: 10px 15px;
+            width: 100%;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        /* Menu de Sugestões de Pesquisa */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #262626;
+            transition: background 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background-color: #2c2c2c;
+        }
+
+        .suggestion-thumb {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #aaa;
+            flex-shrink: 0;
+        }
+
+        .suggestion-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .suggestion-title {
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .suggestion-price {
+            font-size: 12px;
+            color: #888;
+            font-weight: bold;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .header-btn {
+            cursor: pointer;
+            transition: color 0.2s;
+            user-select: none;
+        }
+
+        .header-btn:hover {
+            color: #aaa;
+        }
+
+        /* Navegação */
+        nav {
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 12px 10px;
+            border-bottom: 1px solid #333;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        nav a {
+            font-size: 14px;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        /* Banner Principal */
+        .hero-banner {
+            background: linear-gradient(135deg, #222, #000);
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ffffff;
+        }
+
+        .hero-banner h1 {
+            font-size: 28px;
+            color: #ffffff;
+        }
+
+        /* Grid de Produtos */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffffff;
+            padding-left: 10px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background-color: #1a1a1a;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #222;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffffff;
+        }
+
+        .product-card.highlight {
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            transform: scale(1.02);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 3px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .product-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 13px;
+            color: #ddd;
+            margin-bottom: 8px;
+            height: 38px;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+
+        .product-price-old {
+            font-size: 11px;
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .product-price-current {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .product-installments {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 4px;
+            margin-bottom: 12px;
+        }
+
+        /* Grade de Tamanhos */
+        .size-grid-container {
+            margin-bottom: 15px;
+        }
+
+        .size-label {
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            background-color: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-btn:hover {
+            border-color: #fff;
+        }
+
+        .size-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: bold;
+            border-color: #ffffff;
+        }
+
+        /* Botões de Compra */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .btn-buy {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            text-align: center;
+            transition: opacity 0.2s, background 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-wsp {
+            background-color: #25D366;
+            color: #ffffff;
+        }
+
+        .btn-wsp:hover {
+            background-color: #1eb855;
+        }
+
+        .btn-site {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .btn-site:hover {
+            background-color: #e6e6e6;
+        }
+
+        .btn-icon-svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            font-size: 16px;
+            color: #aaa;
+        }
+
+        /* Seção de Vantagens */
+        .features-section {
+            background-color: #000000;
+            padding: 40px 15px;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+            margin-top: 40px;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 25px;
+            text-align: center;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-icon-svg {
+            width: 40px;
+            height: 40px;
+            fill: #ffffff;
+        }
+
+        .feature-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .feature-desc {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* --- MODAL DA GAVETA DO CARRINHO --- */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 2000;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 380px;
+            height: 100%;
+            background-color: #1a1a1a;
+            border-left: 1px solid #333;
+            z-index: 2001;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 20px;
+            background-color: #000;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 16px;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-body {
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            background: #242424;
+            padding: 10px;
+            border-radius: 6px;
+            align-items: center;
+            position: relative;
+        }
+
+        .cart-item-thumb {
+            width: 50px;
+            height: 50px;
+            background: #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #888;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-meta {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .cart-item-price {
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .cart-item-remove {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        .cart-footer {
+            padding: 20px;
+            background-color: #111;
+            border-top: 1px solid #333;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 14px;
+            background-color: #ffffff;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .btn-checkout:hover {
+            background-color: #e6e6e6;
+        }
+
+        /* --- MODAL DE CHECKOUT / PAGAMENTO --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        /* Abas de Autenticação */
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .form-group input, .form-group select {
+            background-color: #262626;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 4px;
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            border-color: #fff;
+        }
+
+        .btn-submit {
+            background-color: #ffffff;
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #e6e6e6;
+        }
+
+        /* Estilos de Pagamento */
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .pay-method-btn {
+            flex: 1;
+            padding: 10px;
+            background: #262626;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .pay-method-btn.active {
+            border-color: #25D366;
+            background: #1e3324;
+            color: #25D366;
+        }
+
+        .pix-box {
+            background: #242424;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px dashed #25D366;
+        }
+
+        .pix-code {
+            word-break: break-all;
+            background: #111;
+            padding: 8px;
+            font-size: 11px;
+            margin: 10px 0;
+            border-radius: 4px;
+            color: #25D366;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #0b0b0b;
+            color: #aaa;
+            padding: 30px 15px 20px;
+            border-top: 1px solid #222;
+            font-size: 13px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #222;
+            padding-top: 15px;
+            color: #666;
+            font-size: 11px;
+        }
+
+        /* Ajustes Responsivos */
+        @media (max-width: 768px) {
+            header {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .search-container {
+                max-width: 100%;
+                order: 3;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Faixa Topo -->
+    <div class="top-bar">
+        GANHE 4% DE DESCONTO NO PIX! | PARCELE EM ATÉ 3X SEM JUROS!
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">ABREU STORE</div>
+        
+        <!-- Campo de Pesquisa -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="O que deseja procurar?" autocomplete="off">
+            </div>
+            <div id="search-suggestions" class="search-suggestions"></div>
+        </div>
+
+        <div class="header-actions">
+            <span class="header-btn">📞 Atendimento</span>
+            <span class="header-btn" onclick="openAuthModal()">👤 <span id="user-display">Conta</span></span>
+            <span class="header-btn" onclick="toggleCart(true)">🛒 (<span id="cart-count">0</span>)</span>
+        </div>
+    </header>
+
+    <!-- Menu Categorias -->
+    <nav>
+        <a href="#">Categorias</a>
+        <a href="#">Camisetas</a>
+        <a href="#">Bermudas</a>
+        <a href="#">Calças</a>
+    </nav>
+
+    <!-- Banner -->
+    <section class="hero-banner">
+        <h1>SEJA BEM-VINDO À ABREU STORE</h1>
+    </section>
+
+    <!-- Vitrine de Produtos -->
+    <div class="container">
+        
+        <div id="no-results">Nenhum produto encontrado.</div>
+
+        <!-- Camisetas -->
+        <div class="section-block">
+            <h2 class="section-title">Camisetas</h2>
+            <div class="product-grid">
+                
+                <div class="product-card" id="prod-1" data-title="Camisa Slim Fit Azul Marinho Zanon Basic" data-price="109.99">
+                    <div class="product-image">Foto Produto</div>
+                    <div class="product-info">
+                        <div class="product-title">Camisa Slim Fit Azul Marinho Zanon Basic</div>
+                        <div class="product-price-old">R$ 179,99</div>
+                        <div class="product-price-current">R$ 109,99 à vista</div>
+                        <div class="product-installments">ou 12x de R$ 10,59 com juros</div>
+                        
+                        <div class="btn-group">
+                            <a href="https://wa.me/5541995652315?text=Olá,%20tenho%20interesse%20na%20Camisa%20Slim%20Fit%20Azul%20Marinho%20Zanon%20Basic" target="_blank" class="btn-buy btn-wsp">
+                                <svg class="btn-icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                Comprar via WhatsApp
+                            </a>
+                            <button class="btn-buy btn-site" onclick="addToCart('prod-1')">
+                                🛒 Comprar no Site
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" id="prod-2" data-title="Camisa Polo BMW Preta / Linhas Brancas Original" data-price="369.99">
+                    <div class="product-image">Foto Produto</div>
+                    <div class="product-info">
+                        <div class="product-title">Camisa Polo BMW Preta / Linhas Brancas Original</div>
+                        <div class="product-price-old">R$ 399,99</div>
+                        <div class="product-price-current">R$ 369,99 à vista</div>
+                        <div class="product-installments">ou 12x de R$ 35,59 com juros</div>
+                        
+                        <div class="btn-group">
+                            <a href="https://wa.me/5541995652315?text=Olá,%20tenho%20interesse%20na%20Camisa%20Polo%20BMW%20Preta%20/%20Linhas%20Brancas%20Original" target="_blank" class="btn-buy btn-wsp">
+                                <svg class="btn-icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                Comprar via WhatsApp
+                            </a>
+                            <button class="btn-buy btn-site" onclick="addToCart('prod-2')">
+                                🛒 Comprar no Site
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bermudas -->
+        <div class="section-block">
+            <h2 class="section-title">Bermudas</h2>
+            <div class="product-grid">
+                
+                <div class="product-card" id="prod-3" data-title="Bermuda City Denim Cinza com Grandes Rasgos" data-price="149.99">
+                    <span class="discount-badge">-17%</span>
+                    <div class="product-image">Foto Produto</div>
+                    <div class="product-info">
+                        <div class="product-title">Bermuda City Denim Cinza com Grandes Rasgos</div>
+                        <div class="product-price-old">R$ 179,99</div>
+                        <div class="product-price-current">R$ 149,99 à vista</div>
+                        <div class="product-installments">ou 12x de R$ 14,44 com juros</div>
+                        
+                        <div class="size-grid-container">
+                            <span class="size-label">Selecione o Tamanho:</span>
+                            <div class="size-options">
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-3')">38</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-3')">40</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-3')">42</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-3')">44</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-3')">46</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-3')">48</button>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <a href="https://wa.me/5541995652315?text=Olá,%20tenho%20interesse%20na%20Bermuda%20City%20Denim%20Cinza%20com%20Grandes%20Rasgos" target="_blank" class="btn-buy btn-wsp" id="wsp-prod-3">
+                                <svg class="btn-icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                Comprar via WhatsApp
+                            </a>
+                            <button class="btn-buy btn-site" onclick="addToCart('prod-3')">
+                                🛒 Comprar no Site
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" id="prod-4" data-title="Bermuda City Denim Cinza Sem Rasgos Desfiados" data-price="149.99">
+                    <span class="discount-badge">-17%</span>
+                    <div class="product-image">Foto Produto</div>
+                    <div class="product-info">
+                        <div class="product-title">Bermuda City Denim Cinza Sem Rasgos Desfiados</div>
+                        <div class="product-price-old">R$ 179,99</div>
+                        <div class="product-price-current">R$ 149,99 à vista</div>
+                        <div class="product-installments">ou 12x de R$ 14,44 com juros</div>
+                        
+                        <div class="size-grid-container">
+                            <span class="size-label">Selecione o Tamanho:</span>
+                            <div class="size-options">
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-4')">38</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-4')">40</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-4')">42</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-4')">44</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-4')">46</button>
+                                <button type="button" class="size-btn" onclick="selectSize(this, 'prod-4')">48</button>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <a href="https://wa.me/5541995652315?text=Olá,%20tenho%20interesse%20na%20Bermuda%20City%20Denim%20Cinza%20Sem%20Rasgos%20Desfiados" target="_blank" class="btn-buy btn-wsp" id="wsp-prod-4">
+                                <svg class="btn-icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                Comprar via WhatsApp
+                            </a>
+                            <button class="btn-buy btn-site" onclick="addToCart('prod-4')">
+                                🛒 Comprar no Site
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Calças -->
+        <div class="section-block">
+            <h2 class="section-title">Calças</h2>
+            <div class="product-grid">
+                
+                <div class="product-card" id="prod-5" data-title="Calça Jogador Brow Jeans Bern Escura Com rasgos" data-price="189.99">
+                    <span class="discount-badge">-34%</span>
+                    <div class="product-image">Foto Produto</div>
+                    <div class="product-info">
+                        <div class="product-title">Calça Jogador Brow Jeans Bern Escura Com rasgos</div>
+                        <div class="product-price-old">R$ 299,99</div>
+                        <div class="product-price-current">R$ 189,99 à vista</div>
+                        <div class="product-installments">ou 12x de R$ 18,25 com juros</div>
+                        
+                        <div class="btn-group">
+                            <a href="https://wa.me/5541995652315?text=Olá,%20tenho%20interesse%20na%20Calça%20Jogador%20Brow%20Jeans%20Bern%20Escura%20Com%20rasgos" target="_blank" class="btn-buy btn-wsp">
+                                <svg class="btn-icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                Comprar via WhatsApp
+                            </a>
+                            <button class="btn-buy btn-site" onclick="addToCart('prod-5')">
+                                🛒 Comprar no Site
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" id="prod-6" data-title="Calça Jogador Brow Jeans Cinza com efeitos esfumados" data-price="189.99">
+                    <span class="discount-badge">-34%</span>
+                    <div class="product-image">Foto Produto</div>
+                    <div class="product-info">
+                        <div class="product-title">Calça Jogador Brow Jeans Cinza com efeitos esfumados</div>
+                        <div class="product-price-old">R$ 299,99</div>
+                        <div class="product-price-current">R$ 189,99 à vista</div>
+                        <div class="product-installments">ou 12x de R$ 18,25 com juros</div>
+                        
+                        <div class="btn-group">
+                            <a href="https://wa.me/5541995652315?text=Olá,%20tenho%20interesse%20na%20Calça%20Jogador%20Brow%20Jeans%20Cinza%20com%20efeitos%20esfumados" target="_blank" class="btn-buy btn-wsp">
+                                <svg class="btn-icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                Comprar via WhatsApp
+                            </a>
+                            <button class="btn-buy btn-site" onclick="addToCart('prod-6')">
+                                🛒 Comprar no Site
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Seção de Vantagens -->
+    <div class="features-section">
+        <div class="features-grid">
+            <div class="feature-item">
+                <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                <div class="feature-title">Parcelamento</div>
+                <div class="feature-desc">Em até 3x Sem Juros</div>
+            </div>
+            <div class="feature-item">
+                <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <div class="feature-title">Envios</div>
+                <div class="feature-desc">Enviamos para todo Brasil</div>
+            </div>
+            <div class="feature-item">
+                <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <div class="feature-title">Atendimento</div>
+                <div class="feature-desc">via WhatsApp</div>
+            </div>
+            <div class="feature-item">
+                <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <div class="feature-title">Site 100% Seguro</div>
+                <div class="feature-desc">Selo de segurança</div>
+            </div>
+            <div class="feature-item">
+                <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                <div class="feature-title">Desconto de 4%</div>
+                <div class="feature-desc">Em Compras Via Pix</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAVETA LATERAL DO CARRINHO -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart(false)"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>Seu Carrinho (<span id="cart-drawer-count">0</span>)</h3>
+            <button class="cart-close-btn" onclick="toggleCart(false)">&times;</button>
+        </div>
+        <div class="cart-body" id="cart-body">
+            <!-- Os itens do carrinho são gerados via JavaScript -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-value">R$ 0,00</span>
+            </div>
+            <button class="btn-checkout" onclick="openCheckoutModal()">Ir para o Pagamento</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE AUTENTICAÇÃO (Login / Cadastro) -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">&times;</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Entrar</button>
+                <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Criar Conta</button>
+            </div>
+            <form class="auth-form" id="form-login" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="login-email" placeholder="seuemail@exemplo.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-submit">Entrar na Conta</button>
+            </form>
+            <form class="auth-form" id="form-register" style="display: none;" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="reg-name" placeholder="Seu nome" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="reg-email" placeholder="seuemail@exemplo.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefone / WhatsApp</label>
+                    <input type="tel" id="reg-phone" placeholder="(00) 00000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label>Crie uma Senha</label>
+                    <input type="password" id="reg-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-submit">Criar minha Conta</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE CHECKOUT / PAGAMENTO -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
+            <h2 style="margin-bottom: 15px; text-align: center;">Finalizar Pedido</h2>
+            
+            <form class="auth-form" onsubmit="processPayment(event)">
+                <h4 style="color:#aaa; border-bottom: 1px solid #333; padding-bottom: 5px;">1. Endereço de Entrega</h4>
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input type="text" id="checkout-cep" placeholder="00000-000" maxlength="9" required onblur="fetchAddressByCEP()">
+                </div>
+                <div class="form-group">
+                    <label>Endereço / Logradouro</label>
+                    <input type="text" id="checkout-address" placeholder="Rua, Avenida, etc." required>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex:1;">
+                        <label>Número</label>
+                        <input type="text" id="checkout-number" placeholder="123" required>
+                    </div>
+                    <div class="form-group" style="flex:2;">
+                        <label>Bairro</label>
+                        <input type="text" id="checkout-neighborhood" placeholder="Seu bairro" required>
+                    </div>
+                </div>
+
+                <h4 style="color:#aaa; border-bottom: 1px solid #333; padding-bottom: 5px; margin-top: 10px;">2. Método de Pagamento</h4>
+                <div class="payment-methods">
+                    <div class="pay-method-btn active" id="pay-btn-pix" onclick="selectPaymentMethod('pix')">PIX (-4%)</div>
+                    <div class="pay-method-btn" id="pay-btn-card" onclick="selectPaymentMethod('card')">Cartão</div>
+                    <div class="pay-method-btn" id="pay-btn-boleto" onclick="selectPaymentMethod('boleto')">Boleto</div>
+                </div>
+
+                <!-- Painel PIX -->
+                <div id="payment-pix" class="pix-box">
+                    <p style="font-size: 13px;">Pague com PIX e ganhe <strong>4% de Desconto!</strong></p>
+                    <div class="pix-code">00020126580014br.gov.bcb.pix0136abreu-store-pix-chave-ficticia520400005303986540510.005802BR5913ABREU STORE</div>
+                    <p style="font-size: 11px; color:#aaa;">Copie a chave acima e pague no app do seu banco.</p>
+                </div>
+
+                <!-- Painel Cartão -->
+                <div id="payment-card" style="display: none;" class="auth-form">
+                    <div class="form-group">
+                        <label>Número do Cartão</label>
+                        <input type="text" placeholder="0000 0000 0000 0000">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Validade</label>
+                            <input type="text" placeholder="MM/AA">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Painel Boleto -->
+                <div id="payment-boleto" style="display: none;" class="pix-box">
+                    <p style="font-size: 13px;">O boleto bancário será gerado após a confirmação do pedido.</p>
+                </div>
+
+                <div style="margin-top: 15px; background: #111; padding: 12px; border-radius: 4px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px;">
+                        <span>Subtotal:</span>
+                        <span id="checkout-subtotal">R$ 0,00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; color: #25D366;">
+                        <span>Total a Pagar:</span>
+                        <span id="checkout-total">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit" style="background-color: #25D366; color: #fff;">Confirmar e Pagar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>ABREU STORE</h3>
+                <p>Enviamos para todo o Brasil com segurança e rapidez.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Categorias</h3>
+                <ul>
+                    <li><a href="#">Camisetas</a></li>
+                    <li><a href="#">Bermudas</a></li>
+                    <li><a href="#">Calças</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Institucional</h3>
+                <ul>
+                    <li><a href="#">Sobre a Abreu Store</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Trocas e Devoluções</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Atendimento</h3>
+                <p>WhatsApp: +55 41 995652315</p>
+                <p>E-mail: contato@abreustore.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>ABREU STORE - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Principal -->
+    <script>
+        // --- ESTADO DO CARRINHO DE COMPRAS ---
+        let cart = [];
+        let selectedPayment = 'pix';
+        const selectedSizes = {};
+
+        // --- BUSCA AUTOMÁTICA DE CEP (ViaCEP) ---
+        async function fetchAddressByCEP() {
+            const cepInput = document.getElementById('checkout-cep');
+            const cleanCEP = cepInput.value.replace(/\D/g, '');
+
+            if (cleanCEP.length !== 8) return;
+
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cleanCEP}/json/`);
+                const data = await response.json();
+
+                if (data.erro) {
+                    alert('CEP não encontrado. Por favor, verifique e tente novamente.');
+                    return;
+                }
+
+                document.getElementById('checkout-address').value = `${data.logradouro}${data.localidade ? ' - ' + data.localidade + '/' + data.uf : ''}`;
+                document.getElementById('checkout-neighborhood').value = data.bairro;
+                document.getElementById('checkout-number').focus();
+            } catch (err) {
+                console.error('Erro ao buscar o CEP:', err);
+            }
+        }
+
+        // --- SISTEMA DE SELEÇÃO DE TAMANHO ---
+        function selectSize(button, productId) {
+            const card = document.getElementById(productId);
+            const sizeButtons = card.querySelectorAll('.size-btn');
+            
+            sizeButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const selectedSize = button.textContent;
+            selectedSizes[productId] = selectedSize;
+
+            const productTitle = card.getAttribute('data-title');
+            const wspBtn = document.getElementById('wsp-' + productId);
+            if(wspBtn) {
+                const message = encodeURIComponent(`Olá, tenho interesse na ${productTitle} - Tamanho ${selectedSize}`);
+                wspBtn.href = `https://wa.me/5541995652315?text=${message}`;
+            }
+        }
+
+        // --- FUNÇÕES DO CARRINHO ---
+        function addToCart(productId) {
+            const card = document.getElementById(productId);
+            const title = card.getAttribute('data-title');
+            const price = parseFloat(card.getAttribute('data-price'));
+            const size = selectedSizes[productId] || 'Único';
+
+            const existingIndex = cart.findIndex(item => item.id === productId && item.size === size);
+
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    title: title,
+                    price: price,
+                    size: size,
+                    quantity: 1
+                });
+            }
+
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartBody = document.getElementById('cart-body');
+            const cartCount = document.getElementById('cart-count');
+            const cartDrawerCount = document.getElementById('cart-drawer-count');
+            const cartTotalValue = document.getElementById('cart-total-value');
+
+            cartBody.innerHTML = '';
+            let total = 0;
+            let totalItems = 0;
+
+            if(cart.length === 0) {
+                cartBody.innerHTML = '<p style="text-align:center; color:#888; margin-top:30px;">Seu carrinho está vazio.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price * item.quantity;
+                    totalItems += item.quantity;
+
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item';
+                    itemElement.innerHTML = `
+                        <div class="cart-item-thumb">Foto</div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-meta">Tam: ${item.size} | Qtd: ${item.quantity}</div>
+                            <div class="cart-item-price">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${index})">🗑️</button>
+                    `;
+                    cartBody.appendChild(itemElement);
+                });
+            }
+
+            cartCount.textContent = totalItems;
+            cartDrawerCount.textContent = totalItems;
+            cartTotalValue.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        function toggleCart(open) {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+
+            if(open) {
+                drawer.classList.add('open');
+                overlay.style.display = 'block';
+            } else {
+                drawer.classList.remove('open');
+                overlay.style.display = 'none';
+            }
+        }
+
+        // --- CHECKOUT & PAGAMENTO ---
+        function openCheckoutModal() {
+            if(cart.length === 0) {
+                alert("Adicione ao menos um produto no carrinho!");
+                return;
+            }
+            toggleCart(false);
+            calculateCheckoutTotal();
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPayment = method;
+            document.getElementById('pay-btn-pix').classList.remove('active');
+            document.getElementById('pay-btn-card').classList.remove('active');
+            document.getElementById('pay-btn-boleto').classList.remove('active');
+
+            document.getElementById('payment-pix').style.display = 'none';
+            document.getElementById('payment-card').style.display = 'none';
+            document.getElementById('payment-boleto').style.display = 'none';
+
+            document.getElementById(`pay-btn-${method}`).classList.add('active');
+            document.getElementById(`payment-${method}`).style.display = 'block';
+
+            calculateCheckoutTotal();
+        }
+
+        function calculateCheckoutTotal() {
+            let subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            let finalTotal = subtotal;
+
+            if (selectedPayment === 'pix') {
+                finalTotal = subtotal * 0.96; // 4% de Desconto
+            }
+
+            document.getElementById('checkout-subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('checkout-total').textContent = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
+        }
+
+        function processPayment(event) {
+            event.preventDefault();
+            alert("🎉 Compra realizada com sucesso! Obrigado por comprar na Abreu Store.");
+            cart = [];
+            updateCartUI();
+            closeCheckoutModal();
+        }
+
+        // --- AUTENTICAÇÃO E LOGIN ---
+        const authModal = document.getElementById('auth-modal');
+        const tabLogin = document.getElementById('tab-login');
+        const tabRegister = document.getElementById('tab-register');
+        const formLogin = document.getElementById('form-login');
+        const formRegister = document.getElementById('form-register');
+        const userDisplay = document.getElementById('user-display');
+
+        function openAuthModal() {
+            authModal.style.display = 'flex';
+        }
+
+        function closeAuthModal() {
+            authModal.style.display = 'none';
+        }
+
+        function switchTab(tab) {
+            if (tab === 'login') {
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+                formLogin.style.display = 'flex';
+                formRegister.style.display = 'none';
+            } else {
+                tabRegister.classList.add('active');
+                tabLogin.classList.remove('active');
+                formRegister.style.display = 'flex';
+                formLogin.style.display = 'none';
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const firstName = name.split(' ')[0];
+            alert(`Conta criada com sucesso! Bem-vindo(a), ${firstName}!`);
+            userDisplay.textContent = firstName;
+            closeAuthModal();
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const userName = email.split('@')[0];
+            alert(`Login realizado com sucesso!`);
+            userDisplay.textContent = userName;
+            closeAuthModal();
+        }
+
+        // --- SISTEMA DE BUSCA ---
+        const searchInput = document.getElementById('search-input');
+        const searchSuggestions = document.getElementById('search-suggestions');
+        const productCards = document.querySelectorAll('.product-card');
+        const sectionBlocks = document.querySelectorAll('.section-block');
+        const noResults = document.getElementById('no-results');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            searchSuggestions.innerHTML = '';
+
+            if (query === '') {
+                searchSuggestions.style.display = 'none';
+                filterPage(query);
+                return;
+            }
+
+            let matches = 0;
+            productCards.forEach(card => {
+                const title = card.querySelector('.product-title').textContent;
+                const price = card.querySelector('.product-price-current').textContent;
+                const cardId = card.id;
+
+                if (title.toLowerCase().includes(query)) {
+                    matches++;
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.innerHTML = `
+                        <div class="suggestion-thumb">Foto</div>
+                        <div class="suggestion-info">
+                            <span class="suggestion-title">${title}</span>
+                            <span class="suggestion-price">${price}</span>
+                        </div>
+                    `;
+
+                    item.addEventListener('click', function() {
+                        searchInput.value = title;
+                        searchSuggestions.style.display = 'none';
+                        filterPage(title.toLowerCase());
+                        
+                        const targetCard = document.getElementById(cardId);
+                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        targetCard.classList.add('highlight');
+                        setTimeout(() => targetCard.classList.remove('highlight'), 2000);
+                    });
+
+                    searchSuggestions.appendChild(item);
+                }
+            });
+
+            searchSuggestions.style.display = matches > 0 ? 'block' : 'none';
+            filterPage(query);
+        });
+
+        function filterPage(query) {
+            let totalFound = 0;
+            productCards.forEach(card => {
+                const title = card.querySelector('.product-title').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'flex';
+                    totalFound++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            sectionBlocks.forEach(section => {
+                const visibleCards = section.querySelectorAll('.product-card[style="display: flex;"], .product-card:not([style*="display: none"])');
+                section.style.display = (visibleCards.length === 0 && query !== '') ? 'none' : 'block';
+            });
+
+            noResults.style.display = (totalFound === 0 && query !== '') ? 'block' : 'none';
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
